@@ -1,8 +1,16 @@
+import axios from 'axios'
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+axios.get('https://api.github.com/users/juliane1999')
+  .then(response => {
+    console.log(response.data.message)
+  })
+  .catch(err => console.log(err.message))
+  .finally(() => console.log('done'))
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -16,6 +24,9 @@
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+const mainCard = document.querySelector('.cards')
+const card = gitCard({imageURL: response.data.message[0], name: 'juliane1999'})
+mainCard.appendChild(card)
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -49,6 +60,48 @@ const followersArray = [];
       </div>
     </div>
 */
+function gitCard ({imageURL, name, username, location, profile, followers, following, bio}) {
+  const card = document.createElement('div')
+  const img = document.createElement('img')
+  const cardDiv = document.createElement('div')
+  const name = document.createElement('h3')
+  const username = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const url = document.createElement('a')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  name.textContent = `${name}`
+  username.textContent = `${username}`
+  location.textContent = `Location: ${location}`
+  profile.textContent = `Profile: ${profile}`
+  followers.textContent = `Followers: ${followers}`
+  following.textContent = `Following: ${following}`
+  bio.textContent = `Bio: ${bio}`
+  
+  img.src = imageURL
+
+  card.appendChild(img)
+  card.appendChild(cardDiv)
+  cardDiv.appendChild(name)
+  cardDiv.appendChild(username)
+  cardDiv.appendChild(location)
+  cardDiv.appendChild(profile)
+  cardDiv.appendChild(followers)
+  cardDiv.appendChild(following)
+  cardDiv.appendChild(bio)
+  profile.appendChild(url)
+
+  card.classList.add('card')
+  cardDiv.classList.add('card-info')
+  name.classList.add('name')
+  username.classList.add('username')
+
+    return card;
+}
+
 
 /*
   List of LS Instructors Github username's:
